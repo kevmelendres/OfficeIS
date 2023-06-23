@@ -11,6 +11,13 @@ from .models import Profile
 
 # Create your views here.
 
+def index(request):
+    return render(request,'index.html')
+
+def adminLogin(request):
+    return render(request,'admin-login.html')
+
+
 def login(request):
     return render(request,'login.html')
 
