@@ -17,6 +17,9 @@ def index(request):
 def adminLogin(request):
     return render(request,'admin-login.html')
 
+def adminPanel(request):
+    return render(request,'admin-panel.html')
+
 
 def login(request):
     return render(request,'login.html')

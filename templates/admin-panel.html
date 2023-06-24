@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Administrator Page</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/admin-panel.css' %}">
+    <script src="https://kit.fontawesome.com/a9c000d548.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-3 px-0 sidebar">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-5 d-none d-sm-inline">Welcome, Kevin!</span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle content-button" id="home-button">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline sidebartext"><i class="iconindent fa-solid fa-house"></i>Home</span>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
+                            <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                                <li class="w-100 listindent">
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>
+                                </li>
+                                <li class="listindent">
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
+                                </li>
+                            </ul>
+                        </li> -->
+                        <li>
+                            <a href="#" class="nav-link align-middle content-button" id="manageusers-button">
+                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline sidebartext"><i class="iconindent fa-users fa-solid"></i>Manage Users</span></a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="nav-link align-middle content-button" id="messages-button">
+                                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline sidebartext"><i class="iconindent fa-solid fa-envelope"></i>Messages</span> </a>
+                        </li>
+
+                    </ul>
+                    <hr>
+                    <div class="dropdown pb-4">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                            <span class="d-none d-sm-inline mx-1">Kevin</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="main-content">
+                <div class="py-3 content-tab" id="home-tab">
+                    <h3>Left Sidebar with Submenus</h3>
+                    <p class="lead">
+                        HOME
+                        An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
+                        menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
+                    <ul class="list-unstyled">
+                        <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
+                    </ul>
+                </div>
+
+                <div class="py-3 content-tab" id="manageusers-tab">
+                    <h3>Left Sidebar with Submenus</h3>
+                    <p class="lead">
+                        MANAGE USERS
+                        An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
+                        menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
+                    <ul class="list-unstyled">
+                        <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
+                    </ul>
+                </div>
+
+                <div class="py-3 content-tab" id="messages-tab">
+                    <h3>Left Sidebar with Submenus</h3>
+                    <p class="lead">
+                        MESSAGES
+                        An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
+                        menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
+                    <ul class="list-unstyled">
+                        <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="{% static 'js/admin-panel.js' %}"></script>
+
+</body>
+</html>

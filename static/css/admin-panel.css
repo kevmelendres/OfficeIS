@@ -1,0 +1,59 @@
+
+
+.listindent {
+    padding-left: 10px;
+}
+
+.iconindent {
+    padding-right: 10px;
+}
+
+body {
+    font-family: 'Cabin', sans-serif;
+}
+
+.sidebar {
+    background-color: #0E2954;
+    padding-top: 1.25rem;
+    padding-left: 1.25rem;
+    position:fixed;
+    width: 15%;
+    
+}
+
+#dropdownUser {
+    padding-bottom: 10px;
+}
+
+.sidebartext {
+    color: white 
+}
+
+.main-content {
+    width: 85%;
+    margin-left: 15%;
+}
+
+.content-tab:not(#home-tab) {
+    display: none;
+}
+
+.content-tab {
+    margin: 15px;
+}
+
+/* #home-button {
+    background-color: #2E8A99;
+
+} */
+
+.content-button {
+    position: relative;
+    /* width: 13.8rem; */
+    padding-left: 10px;
+}
+
+.content-button:hover{
+
+    font-size: larger;
+}
