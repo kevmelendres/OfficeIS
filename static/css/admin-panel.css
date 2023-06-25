@@ -42,18 +42,39 @@ body {
     margin: 15px;
 }
 
-/* #home-button {
-    background-color: #2E8A99;
-
-} */
-
 .content-button {
     position: relative;
     /* width: 13.8rem; */
     padding-left: 10px;
 }
 
-.content-button:hover{
-
+.content-button:hover {
     font-size: larger;
+}
+
+.logo-container {
+    padding-bottom: 20px;
+}
+
+.manage-users-tab {
+    padding: 5% 5% 5% 5%;
+
+}
+
+h4 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 65%;
+}
+
+.radio-label {
+    padding-left: 10px;
+}
+
+.register-employee-btn {
+    margin-right: 10%;
+    margin-top: 5%;
 }

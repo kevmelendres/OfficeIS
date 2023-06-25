@@ -1,6 +1,8 @@
 
+changeManageUsersTab();
+changeViews();
 
-changeViews()
+
 
 
 
@@ -86,3 +88,84 @@ function changeViews () {
   }
 
 }
+
+function changeManageUsersTab(){
+  let curActive = document.querySelector('#employee-registration-select-tab');
+  curActive.classList.toggle('active'); 
+  
+  let manageUsersSelectTabs = document.querySelectorAll('.manage-users-select-tab');
+
+
+  for (let i = 0; i<manageUsersSelectTabs.length; ++i) {
+    manageUsersSelectTabs[i].addEventListener("click", function(){
+
+      tabId = this.id;
+
+      let manageUsersTabs = document.querySelectorAll('.manage-users-tab');
+
+
+      switch(tabId) {
+        case 'employee-registration-select-tab':
+          for (let i = 0;i<manageUsersTabs.length;++i){
+            if (manageUsersTabs[i].id != 'employee-registration-tab'){
+              manageUsersTabs[i].style.display = 'none'
+            } else {
+              manageUsersTabs[i].style.display = 'block'
+            }
+          }
+
+          for (let i=0;i<manageUsersSelectTabs.length;++i){
+            if (manageUsersSelectTabs[i].id != 'employee-registration-select-tab'){
+              manageUsersSelectTabs[i].classList.remove('active')
+            } else {
+              anageUsersSelectTabs[i].classList.add('active')
+            }
+          }
+
+          
+          break;
+
+        case 'employee-list-select-tab':
+            for (let i = 0;i<manageUsersTabs.length;++i){
+              if (manageUsersTabs[i].id != 'employee-list-tab'){
+                manageUsersTabs[i].style.display = 'none'
+              } else {
+                manageUsersTabs[i].style.display = 'block'
+              }
+            }
+
+            for (let i=0;i<manageUsersSelectTabs.length;++i){
+              if (manageUsersSelectTabs[i].id != 'employee-list-select-tab'){
+                manageUsersSelectTabs[i].classList.remove('active')
+              } else {
+                anageUsersSelectTabs[i].classList.add('active')
+              }
+            }
+  
+
+          break;
+
+        case 'project-assignment-select-tab':
+              for (let i = 0;i<manageUsersTabs.length;++i){
+                if (manageUsersTabs[i].id != 'project-assignment-tab'){
+                  manageUsersTabs[i].style.display = 'none'
+                } else {
+                  manageUsersTabs[i].style.display = 'block'
+                }
+              }
+
+              for (let i=0;i<manageUsersSelectTabs.length;++i){
+                if (manageUsersSelectTabs[i].id != 'project-assignment-select-tab'){
+                  manageUsersSelectTabs[i].classList.remove('active')
+                } else {
+                  anageUsersSelectTabs[i].classList.add('active')
+                }
+              }
+    
+           
+            break;
+      }
+    })
+  }
+}
+
