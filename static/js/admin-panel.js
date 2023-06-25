@@ -1,7 +1,7 @@
 
 changeManageUsersTab();
 changeViews();
-
+showHideAssignTL();
 
 
 
@@ -90,6 +90,7 @@ function changeViews () {
 }
 
 function changeManageUsersTab(){
+
   let curActive = document.querySelector('#employee-registration-select-tab');
   curActive.classList.toggle('active'); 
   
@@ -118,7 +119,7 @@ function changeManageUsersTab(){
             if (manageUsersSelectTabs[i].id != 'employee-registration-select-tab'){
               manageUsersSelectTabs[i].classList.remove('active')
             } else {
-              anageUsersSelectTabs[i].classList.add('active')
+              manageUsersSelectTabs[i].classList.add('active')
             }
           }
 
@@ -138,7 +139,7 @@ function changeManageUsersTab(){
               if (manageUsersSelectTabs[i].id != 'employee-list-select-tab'){
                 manageUsersSelectTabs[i].classList.remove('active')
               } else {
-                anageUsersSelectTabs[i].classList.add('active')
+                manageUsersSelectTabs[i].classList.add('active')
               }
             }
   
@@ -158,7 +159,7 @@ function changeManageUsersTab(){
                 if (manageUsersSelectTabs[i].id != 'project-assignment-select-tab'){
                   manageUsersSelectTabs[i].classList.remove('active')
                 } else {
-                  anageUsersSelectTabs[i].classList.add('active')
+                  manageUsersSelectTabs[i].classList.add('active')
                 }
               }
     
@@ -168,4 +169,20 @@ function changeManageUsersTab(){
     })
   }
 }
+
+function showHideAssignTL(){
+  let employeeRoles = document.querySelector('#employee-role-select');
+
+  employeeRoles.addEventListener('change',function(){
+    if (this.value === "Team Leader") {
+      document.querySelector('#assign-to-team-container').style.display='none';
+
+    } else {
+      document.querySelector('#assign-to-team-container').style.display='block';
+    }
+
+  });
+  
+  }
+
 
