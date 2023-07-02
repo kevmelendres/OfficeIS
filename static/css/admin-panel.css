@@ -101,3 +101,17 @@ h4 {
     display: none;
     margin-top: 2rem;
 }
+
+.employee-buttons {
+    display: none;
+
+}
+
+.employee-buttons:hover {
+    display: none;
+}
+
+.each-employee-tab:hover .employee-buttons {
+    display: block;
+}
+

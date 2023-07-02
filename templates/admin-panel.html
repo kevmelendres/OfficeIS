@@ -110,7 +110,7 @@
 
                     <div class="container-fluid manage-users-tab" id="employee-registration-tab">
 
-                        <form action="">
+                        <form action="" id="registration-form">
 
                             <div class="row">
 
@@ -118,7 +118,6 @@
 
                                     <h4>Employee Information</h4>
                                 
-
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form3Example1cg">First Name</label>
                                         <input type="text" id="firstname" name="firstname" class="form-control form-control-md">
@@ -129,7 +128,7 @@
                                     </div>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form3Example1cg">Email Address</label>
-                                        <input type="email" id="lastname" name="email" class="form-control form-control-md">
+                                        <input type="email" id="email" name="email" class="form-control form-control-md">
                                     </div>
                                 </div>
 
@@ -139,17 +138,17 @@
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form3Example1cg">Username</label>
-                                        <input type="text" id="firstname" name="firstname" class="form-control form-control-md">
+                                        <input type="text" id="username" name="username" class="form-control form-control-md">
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form3Example1cg">Password</label>
-                                        <input type="text" id="firstname" name="firstname" class="form-control form-control-md">
+                                        <input type="text" id="password1" name="password1" class="form-control form-control-md">
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="form3Example1cg">Retype Password</label>
-                                        <input type="text" id="firstname" name="firstname" class="form-control form-control-md">
+                                        <input type="text" id="password2" name="password2" class="form-control form-control-md">
                                     </div>
 
                                 </div>
@@ -161,7 +160,7 @@
                                     <div class="form-outline mb-4">
                                         <img src="" alt="">
                                         <label class="form-label" for="form3Example1cg">Upload picture</label>
-                                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                        <input class="form-control form-control-sm" id="profileimg" name = "profileimg" type="file">
                                     </div>
 
                                 </div>
@@ -173,10 +172,9 @@
 
                                         <label>Employee Role</label>
 
-                                        <select class="form-select" id="employee-role-select" aria-label="">
+                                        <select class="form-select" id="employee-role-select" aria-label="" name = 'employee-role'>
                                             <option selected value="Team Leader" class="employee-role">Team Leader</option>
                                             <option value="Member" class="employee-role">Member</option>
-
                                         </select>
                                     </div>
 
@@ -193,35 +191,112 @@
 
                                     </div>
 
-                                    
-
                                 </div>
 
                             </div>
 
                             <div class="row">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">  
-                                    <button class="btn btn-primary register-employee-btn" type="button">Register Employee</button>
+                                    <button class="btn btn-primary register-employee-btn" type="submit" name="register-employee">Register Employee</button>
+                                </div>
+                            </div>
+
+                            <!-- MODAL SUCCESS -->
+                            <div class="modal fade" id="registrationSuccess" tabindex="-1" role="dialog" aria-labelledby="registrationSuccess" aria-hidden="false">
+                                <div class="modal-dialog modal-dialog-centered " role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Registration success!
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
 
                         </form>
 
-
-
-
-
-
                         
                     </div>
 
                     <div class="container-fluid manage-users-tab" id="employee-list-tab">
-                        EMPTY EMPLOYEE LIST
+                        <h4><strong>Current Employee List</strong></h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="list-group">
+                                        
+                                            <!-- Modal UPDATE DETAILS-->
+                                            <div id="employee-list-container">
+                                                <div class="modal fade" id="editDetailsModal" tabindex="-1" role="dialog" aria-labelledby="editDetailsModal" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Update Existing Record</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        ...
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- MODAL DELETE CONFIRM-->
+                                            <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDelete" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered " role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    Are you sure you want to delete record?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" >Yes</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
                     </div>
 
                     <div class="container-fluid manage-users-tab" id="project-assignment-tab">
                         EMPTY PROJECT ASSIGNMENT
                     </div>
+
+
+
+
+
 
 
 

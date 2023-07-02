@@ -9,16 +9,15 @@ urlpatterns = [
 
 
 
-
-
-
-
-
-
-
-
-
-    # api url patterns starts here
-    path('api/user-list/', views.userlist, name = 'user-list'),
+    # <-- API URLS STARTS HERE -->
+    path('api/userlist/', views.userList, name = 'userList'),
+    path('api/allUserLogins/', views.allUserLogins, name = 'allUserLogins'),
+    path('api/userListViewer/', views.userListViewer, name = 'allUserLogins'),
+    path('api/user/<str:pk>/', views.userDetails, name = 'userDetails'),
+    path('api/createteamleader/', views.createTeamLeader, name = 'createTeamLeader'),
+    path('api/createmember/', views.createTeamLeader, name = 'createMember'),
+    path('api/createuser/', views.createUser, name = 'createUser'),
+    path('api/updateuser/<str:pk>/', views.updateUser, name = 'updateUser'),
+    path('api/deleteuser/<str:pk>/', views.deleteUser, name = 'deleteUser'),
 
 ]

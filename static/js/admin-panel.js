@@ -2,9 +2,26 @@
 changeManageUsersTab();
 changeViews();
 showHideAssignTL();
+buildEmployeeList();
+registerUser();
 
 
-
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
 
 
 
@@ -185,4 +202,107 @@ function showHideAssignTL(){
   
   }
 
+function buildEmployeeList(){
+
+  let wrapper = document.getElementById('employee-list-container');
+  let sourceURL = 'http://127.0.0.1:8000/api/allUserLogins/';
+
+  fetch(sourceURL)
+  .then((resp) => resp.json())
+  .then(function(data){
+    let employeeList = data
+
+    for (let i = 0; i< employeeList.length;i++){
+      let item = `
+        <a href="#" class="list-group-item list-group-item-action list-group-item-light each-employee-tab">
+          <div class="row">
+              <div class="col-md-8">
+              ${employeeList[i].username}
+              </div>
+              <div class="col-md-2 text-center employee-buttons">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDetailsModal" id='update-button-${employeeList[i].id}'>Update</button>
+              </div>
+              <div class="col-md-2 text-center employee-buttons" data-bs-toggle="modal" data-bs-target="#confirmDelete" id='delete-button-${employeeList[i].id}'>
+                  <button type="button" class="btn btn-danger">Delete</button>
+              </div>
+          </div>
+        </a>
+
+      `
+
+
+      wrapper.innerHTML += item
+
+    }
+
+
+
+
+  })
+
+}
+
+function registerUser(){
+
+  let form = document.getElementById('registration-form');
+
+  form.addEventListener('submit',function(e){
+    let firstname = document.getElementById('firstname').value;
+    let lastname = document.getElementById('lastname').value;
+    let email = document.getElementById('email').value;
+
+    let username = document.getElementById('username').value;
+    let password1 = document.getElementById('password1').value;
+    let password2 = document.getElementById('password2').value;
+
+    let employeeRole = document.getElementById('employee-role-select').value;
+    e.preventDefault();
+
+    let userlistUrl = 'http://127.0.0.1:8000/api/userListViewer/';
+
+    fetch(userlistUrl)
+    .then((resp) => resp.json())
+    .then(function(data){
+      let userList = data
+
+      for (key in userList) {
+        if (userList[key]['username'] == username){
+          console.log('EXISTSSSS');
+        }
+      }
+    
+    })
+
+    if (employeeRole=='Member' && password1 == password2) {
+        let userUrl = 'http://127.0.0.1:8000/api/createuser/'
+        let memberUrl = 'http://127.0.0.1:8000/api/createmember/'
+        
+
+        fetch(userUrl,{
+          method:'POST',
+          headers:{
+            'Content-type':'application/json',
+            'X-CSRFToken':csrftoken,
+          },
+          body:JSON.stringify({"username": username,
+          "first_name": firstname,
+          "last_name": lastname,
+          "email": email,
+          "password": password1
+        }
+        
+          ),
+        }
+        )
+
+        new bootstrap.Modal(document.querySelector("#registrationSuccess")).show();
+
+    } else {
+        let url = 'http://127.0.0.1:8000/api/createteamleader/'
+    }
+
+
+}
+  )
+}
 
