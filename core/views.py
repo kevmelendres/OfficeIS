@@ -77,7 +77,7 @@ def signup(request):
 @api_view(['GET'])
 def userList(request):
     users = Member.objects.all()
-    serializer = UserlistSerializer(users,many=True)
+    serializer = UserListViewerSerializer(users,many=True)
     return Response(serializer.data)
 
 

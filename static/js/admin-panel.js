@@ -1,9 +1,13 @@
+var homeUrl = 'https://kevmelendres-vigilant-couscous-pqp75qwg9gqf6jwg-8000.preview.app.github.dev/'
+// var homeUrl = 'http://127.0.0.1:8000/'
 
 changeManageUsersTab();
 changeViews();
 showHideAssignTL();
 buildEmployeeList();
 registerUser();
+
+
 
 
 function getCookie(name) {
@@ -205,7 +209,9 @@ function showHideAssignTL(){
 function buildEmployeeList(){
 
   let wrapper = document.getElementById('employee-list-container');
-  let sourceURL = 'http://127.0.0.1:8000/api/allUserLogins/';
+  wrapper.innerHTML = ''
+  let sourceURL = homeUrl + 'api/allUserLogins/';
+
 
   fetch(sourceURL)
   .then((resp) => resp.json())
@@ -258,7 +264,7 @@ function registerUser(){
     let employeeRole = document.getElementById('employee-role-select').value;
     e.preventDefault();
 
-    let userlistUrl = 'http://127.0.0.1:8000/api/userListViewer/';
+    let userlistUrl = homeUrl + 'api/userListViewer/';
 
     fetch(userlistUrl)
     .then((resp) => resp.json())
@@ -274,10 +280,9 @@ function registerUser(){
     })
 
     if (employeeRole=='Member' && password1 == password2) {
-        let userUrl = 'http://127.0.0.1:8000/api/createuser/'
-        let memberUrl = 'http://127.0.0.1:8000/api/createmember/'
+        let userUrl = homeUrl + 'api/createuser/'
+        let memberUrl = homeUrl + 'api/createmember/'
         
-
         fetch(userUrl,{
           method:'POST',
           headers:{
@@ -296,9 +301,10 @@ function registerUser(){
         )
 
         new bootstrap.Modal(document.querySelector("#registrationSuccess")).show();
+        buildEmployeeList();
 
     } else {
-        let url = 'http://127.0.0.1:8000/api/createteamleader/'
+        let url = homeUrl + 'api/createteamleader/'
     }
 
 
