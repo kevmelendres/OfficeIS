@@ -1,5 +1,6 @@
-var homeUrl = 'https://kevmelendres-vigilant-couscous-pqp75qwg9gqf6jwg-8000.preview.app.github.dev/'
-// var homeUrl = 'http://127.0.0.1:8000/'
+// var homeUrl = 'https://kevmelendres-vigilant-couscous-pqp75qwg9gqf6jwg-8000.preview.app.github.dev/'
+var homeUrl = 'http://127.0.0.1:8000/'
+
 
 changeManageUsersTab();
 changeViews();
@@ -266,6 +267,7 @@ function registerUser(){
 
     let userlistUrl = homeUrl + 'api/userListViewer/';
 
+
     fetch(userlistUrl)
     .then((resp) => resp.json())
     .then(function(data){
@@ -273,13 +275,60 @@ function registerUser(){
 
       for (key in userList) {
         if (userList[key]['username'] == username){
-          console.log('EXISTSSSS');
+
+          document.querySelector("#username").classList.add('is-invalid');
+          document.querySelector("#username").classList.remove('is-valid');
+          document.querySelector("#validationUsernameFeedback").classList.add('invalid-feedback');
+          document.querySelector("#validationUsernameFeedback").classList.remove('valid-feedback');
+          document.querySelector("#validationUsernameFeedback").innerText = "Username already taken.";
+
+          return;
+        
+        } else {
+          document.querySelector("#username").classList.add('is-valid');
+          document.querySelector("#username").classList.remove('is-invalid');
+          document.querySelector("#validationUsernameFeedback").classList.add('valid-feedback');
+          document.querySelector("#validationUsernameFeedback").classList.remove('invalid-feedback');
+          document.querySelector("#validationUsernameFeedback").innerText = "Username available!";
+
         }
       }
     
     })
 
-    if (employeeRole=='Member' && password1 == password2) {
+
+    // VALIDATION CHECKS!
+
+
+
+
+    // check if passwords are same
+    if (password1 != password2) {
+      document.querySelector("#password1").classList.add('is-invalid');
+      document.querySelector("#password1").classList.remove('is-valid');
+      document.querySelector("#password2").classList.add('is-invalid');
+      document.querySelector("#password2").classList.remove('is-valid');
+      document.querySelector("#validationPasswordFeedback").classList.add('invalid-feedback');
+      document.querySelector("#validationPasswordFeedback").classList.remove('valid-feedback');
+      document.querySelector("#validationPasswordFeedback").innerText = "Passwords do not match!";
+      return;
+
+    } else {
+      document.querySelector("#password1").classList.add('is-valid');
+      document.querySelector("#password1").classList.remove('is-invalid');
+      document.querySelector("#password2").classList.add('is-valid');
+      document.querySelector("#password2").classList.remove('is-invalid');
+      document.querySelector("#validationPasswordFeedback").classList.add('valid-feedback');
+      document.querySelector("#validationPasswordFeedback").classList.remove('invalid-feedback');
+      document.querySelector("#validationPasswordFeedback").innerText = "Passwords match!";
+    }
+
+
+
+    // END OF VALIDATION CHECKS!
+
+
+    if (employeeRole=='Member') {
         let userUrl = homeUrl + 'api/createuser/'
         let memberUrl = homeUrl + 'api/createmember/'
         

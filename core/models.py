@@ -39,4 +39,4 @@ class Member(models.Model):
     profileimg = models.ImageField(upload_to='profile_images', default='blankprofile.png')
     location = models.CharField(max_length=100,blank=True)
 
-    assignedTL = models.ForeignKey(TeamLeader, on_delete=models.PROTECT) 
+    assignedTL = models.ForeignKey(TeamLeader, on_delete=models.PROTECT, null=True) 

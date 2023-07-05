@@ -15,7 +15,7 @@ class MemberSerializer(serializers.ModelSerializer):
 class UserListViewerSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username','email']
+        fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

@@ -118,9 +118,6 @@ def createMember(request):
 
     return Response(serializer.data)
 
-
-
-
 @api_view(['DELETE'])
 def deleteUser(request,pk):
     user = Member.objects.get(id=pk)
@@ -132,8 +129,21 @@ def createUser(request):
     serializer = UserSerializer(data=request.data)
     
     if serializer.is_valid():
-        serializer.validated_data['password'] = make_password('password')
-        serializer.save()
+        
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+        email = serializer.validated_data['email']
+
+        user = User.objects.create_user(username, email, password)
+        user.first_name = serializer.validated_data['first_name']
+        user.last_name = serializer.validated_data['last_name']
+        user.save()
+
+        newAddedUser = User.objects.get(username = username)
+        print(newAddedUser.last_name)
+ 
+        member = Member.objects.create(user=newAddedUser,firstName=newAddedUser.first_name,lastName = newAddedUser.last_name, email=email,username=username)
+        member.save()
 
     return Response(serializer.data)
 
