@@ -263,10 +263,16 @@ function registerUser(){
     let password2 = document.getElementById('password2').value;
 
     let employeeRole = document.getElementById('employee-role-select').value;
+
+    if (employeeRole == 'Member') {
+      var teamLeader = document.getElementById('team-leader-list').value;
+    } else {
+      var teamLeader = 'Team Leader';
+    }
+    
     e.preventDefault();
 
     let userlistUrl = homeUrl + 'api/userListViewer/';
-
 
     fetch(userlistUrl)
     .then((resp) => resp.json())
@@ -296,68 +302,68 @@ function registerUser(){
     
     })
 
-
     // VALIDATION CHECKS!
-
-
-
-
-    // check if passwords are same
     if (password1 != password2) {
-      document.querySelector("#password1").classList.add('is-invalid');
-      document.querySelector("#password1").classList.remove('is-valid');
-      document.querySelector("#password2").classList.add('is-invalid');
-      document.querySelector("#password2").classList.remove('is-valid');
-      document.querySelector("#validationPasswordFeedback").classList.add('invalid-feedback');
-      document.querySelector("#validationPasswordFeedback").classList.remove('valid-feedback');
-      document.querySelector("#validationPasswordFeedback").innerText = "Passwords do not match!";
       return;
-
-    } else {
-      document.querySelector("#password1").classList.add('is-valid');
-      document.querySelector("#password1").classList.remove('is-invalid');
-      document.querySelector("#password2").classList.add('is-valid');
-      document.querySelector("#password2").classList.remove('is-invalid');
-      document.querySelector("#validationPasswordFeedback").classList.add('valid-feedback');
-      document.querySelector("#validationPasswordFeedback").classList.remove('invalid-feedback');
-      document.querySelector("#validationPasswordFeedback").innerText = "Passwords match!";
     }
-
 
 
     // END OF VALIDATION CHECKS!
 
-
-    if (employeeRole=='Member') {
-        let userUrl = homeUrl + 'api/createuser/'
-        let memberUrl = homeUrl + 'api/createmember/'
-        
-        fetch(userUrl,{
-          method:'POST',
-          headers:{
-            'Content-type':'application/json',
-            'X-CSRFToken':csrftoken,
-          },
-          body:JSON.stringify({"username": username,
-          "first_name": firstname,
-          "last_name": lastname,
-          "email": email,
-          "password": password1
-        }
-        
-          ),
-        }
-        )
-
-        new bootstrap.Modal(document.querySelector("#registrationSuccess")).show();
-        buildEmployeeList();
-
-    } else {
-        let url = homeUrl + 'api/createteamleader/'
+    let userUrl = homeUrl + 'api/createuser/'
+    
+    fetch(userUrl,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json',
+        'X-CSRFToken':csrftoken,
+      },
+      body:JSON.stringify({"username": username,
+      "first_name": firstname,
+      "last_name": lastname,
+      "email": email,
+      "password": password1,
+      "employeeRole": employeeRole,
+      "teamLeader": teamLeader,
+    }),
     }
+    )
+
+    new bootstrap.Modal(document.querySelector("#registrationSuccess")).show();
+    buildEmployeeList();
+
+
 
 
 }
   )
 }
 
+function passwordValidator(){
+
+  let password1 = document.getElementById('password1').value;
+  let password2 = document.getElementById('password2').value;
+
+  if (password1 == ''){
+    return;
+  }
+
+  if (password1 != password2) {
+    document.querySelector("#password1").classList.add('is-invalid');
+    document.querySelector("#password1").classList.remove('is-valid');
+    document.querySelector("#password2").classList.add('is-invalid');
+    document.querySelector("#password2").classList.remove('is-valid');
+    document.querySelector("#validationPasswordFeedback").classList.add('invalid-feedback');
+    document.querySelector("#validationPasswordFeedback").classList.remove('valid-feedback');
+    document.querySelector("#validationPasswordFeedback").innerText = "Passwords do not match!";
+
+  } else {
+    document.querySelector("#password1").classList.add('is-valid');
+    document.querySelector("#password1").classList.remove('is-invalid');
+    document.querySelector("#password2").classList.add('is-valid');
+    document.querySelector("#password2").classList.remove('is-invalid');
+    document.querySelector("#validationPasswordFeedback").classList.add('valid-feedback');
+    document.querySelector("#validationPasswordFeedback").classList.remove('invalid-feedback');
+    document.querySelector("#validationPasswordFeedback").innerText = "Passwords match!";
+  }
+}

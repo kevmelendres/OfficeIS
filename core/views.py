@@ -98,25 +98,25 @@ def updateUser(request,pk):
 
     return Response(serializer.data)
 
-@api_view(['POST'])
-def createTeamLeader(request):
+# @api_view(['POST'])
+# def createTeamLeader(request):
 
-    serializer = TeamLeaderSerializer(data=request.data)
+#     serializer = TeamLeaderSerializer(data=request.data)
 
-    if serializer.is_valid():
-        serializer.save()
+#     if serializer.is_valid():
+#         serializer.save()
 
-    return Response(serializer.data)
+#     return Response(serializer.data)
 
-@api_view(['POST'])
-def createMember(request):
+# @api_view(['POST'])
+# def createMember(request):
 
-    serializer = Member(data=request.data)
+#     serializer = Member(data=request.data)
 
-    if serializer.is_valid():
-        serializer.save()
+#     if serializer.is_valid():
+#         serializer.save()
 
-    return Response(serializer.data)
+#     return Response(serializer.data)
 
 @api_view(['DELETE'])
 def deleteUser(request,pk):
@@ -126,26 +126,39 @@ def deleteUser(request,pk):
 
 @api_view(['POST'])
 def createUser(request):
-    serializer = UserSerializer(data=request.data)
+    serializerUser = UserSerializer(data=request.data)
+    serializerMember = MemberSerializer(data=request.data)
+
+    # print(serializerMember)
     
-    if serializer.is_valid():
-        
-        username = serializer.validated_data['username']
-        password = serializer.validated_data['password']
-        email = serializer.validated_data['email']
+    if serializerUser.is_valid():
+        print('serializerUser')
+        username = serializerUser.validated_data['username']
+        password = serializerUser.validated_data['password']
+        email = serializerUser.validated_data['email']
+    
+    if serializerMember.is_valid():
+        print('serializerMember')
+        employeeRole = serializerMember.validated_data['employeeRole']
+        teamLeader = serializerMember.validated_data['teamLeader']
 
-        user = User.objects.create_user(username, email, password)
-        user.first_name = serializer.validated_data['first_name']
-        user.last_name = serializer.validated_data['last_name']
-        user.save()
+    
 
-        newAddedUser = User.objects.get(username = username)
-        print(newAddedUser.last_name)
- 
-        member = Member.objects.create(user=newAddedUser,firstName=newAddedUser.first_name,lastName = newAddedUser.last_name, email=email,username=username)
+    user = User.objects.create_user(username, email, password)
+    user.first_name = serializerUser.validated_data['first_name']
+    user.last_name = serializerUser.validated_data['last_name']
+    user.save()
+
+    newAddedUser = User.objects.get(username = username)
+
+    if employeeRole == 'Member':
+        member = Member.objects.create(user=newAddedUser,firstName=newAddedUser.first_name,lastName = newAddedUser.last_name, email=email,username=username,assignedTL=teamLeader)
         member.save()
+    else:
+        teamleader = TeamLeader.objects.create(user=newAddedUser,firstName=newAddedUser.first_name,lastName = newAddedUser.last_name, email=email,username=username)
+        teamleader.save()
 
-    return Response(serializer.data)
+    return Response(serializerUser.data)
 
 @api_view(['GET'])
 def allUserLogins(request):
