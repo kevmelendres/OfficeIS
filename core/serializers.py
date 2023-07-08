@@ -6,11 +6,13 @@ class TeamLeaderSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamLeader
         fields = '__all__'
+        extra_kwargs = {'user': {'required': False}}
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = '__all__'
+        extra_kwargs = {'user': {'required': False}}
 
 class UserListViewerSerializer(serializers.ModelSerializer):
     class Meta:

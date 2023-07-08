@@ -10,12 +10,19 @@ urlpatterns = [
 
 
     # <-- API URLS STARTS HERE -->
-    path('api/userlist/', views.userList, name = 'userList'),
+
     path('api/allUserLogins/', views.allUserLogins, name = 'allUserLogins'),
-    path('api/userListViewer/', views.userListViewer, name = 'allUserLogins'),
+
+    path('api/allTeamLeaders/', views.allTeamLeaders, name = 'allTeamLeaders'),
+
     path('api/user/<str:pk>/', views.userDetails, name = 'userDetails'),
-    path('api/createuser/', views.createUser, name = 'createUser'),
+    
     path('api/updateuser/<str:pk>/', views.updateUser, name = 'updateUser'),
     path('api/deleteuser/<str:pk>/', views.deleteUser, name = 'deleteUser'),
 
+
+    path('api/createuser/', views.createUser, name = 'createUser'),
+
+    path('api/createMember/', views.createMember, name = 'createMember'),
+    path('api/createTeamLeader/', views.createTeamLeader, name = 'createTeamLeader'),
 ]

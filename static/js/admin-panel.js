@@ -8,6 +8,9 @@ showHideAssignTL();
 buildEmployeeList();
 registerUser();
 
+buildTeamLeaderList();
+usernameValidator();
+
 
 
 
@@ -26,11 +29,8 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
 const csrftoken = getCookie('csrftoken');
-
-
-
-
 
 function changeViews () {
 
@@ -213,37 +213,35 @@ function buildEmployeeList(){
   wrapper.innerHTML = ''
   let sourceURL = homeUrl + 'api/allUserLogins/';
 
-
   fetch(sourceURL)
   .then((resp) => resp.json())
   .then(function(data){
     let employeeList = data
 
     for (let i = 0; i< employeeList.length;i++){
-      let item = `
-        <a href="#" class="list-group-item list-group-item-action list-group-item-light each-employee-tab">
-          <div class="row">
-              <div class="col-md-8">
-              ${employeeList[i].username}
-              </div>
-              <div class="col-md-2 text-center employee-buttons">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDetailsModal" id='update-button-${employeeList[i].id}'>Update</button>
-              </div>
-              <div class="col-md-2 text-center employee-buttons" data-bs-toggle="modal" data-bs-target="#confirmDelete" id='delete-button-${employeeList[i].id}'>
-                  <button type="button" class="btn btn-danger">Delete</button>
-              </div>
-          </div>
-        </a>
+      if (employeeList[i].username != 'admin'){
+        let item = `
+          <a href="#" class="list-group-item list-group-item-action list-group-item-light each-employee-tab">
+            <div class="row">
+                <div class="col-md-8">
+                ${employeeList[i].username}
+                </div>
+                <div class="col-md-2 text-center employee-buttons">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDetailsModal" id='update-button-${employeeList[i].id}'>Update</button>
+                </div>
+                <div class="col-md-2 text-center employee-buttons" data-bs-toggle="modal" data-bs-target="#confirmDelete" id='delete-button-${employeeList[i].id}'>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+          </a>
 
-      `
+        `
 
 
-      wrapper.innerHTML += item
-
+        wrapper.innerHTML += item
     }
 
-
-
+    }
 
   })
 
@@ -254,8 +252,8 @@ function registerUser(){
   let form = document.getElementById('registration-form');
 
   form.addEventListener('submit',function(e){
-    let firstname = document.getElementById('firstname').value;
-    let lastname = document.getElementById('lastname').value;
+    let firstname = capitalizeFirstLetter(document.getElementById('firstname').value);
+    let lastname = capitalizeFirstLetter(document.getElementById('lastname').value);
     let email = document.getElementById('email').value;
 
     let username = document.getElementById('username').value;
@@ -272,7 +270,7 @@ function registerUser(){
     
     e.preventDefault();
 
-    let userlistUrl = homeUrl + 'api/userListViewer/';
+    let userlistUrl = homeUrl + 'api/allUserLogins/';
 
     fetch(userlistUrl)
     .then((resp) => resp.json())
@@ -310,6 +308,7 @@ function registerUser(){
 
     // END OF VALIDATION CHECKS!
 
+
     let userUrl = homeUrl + 'api/createuser/'
     
     fetch(userUrl,{
@@ -324,20 +323,54 @@ function registerUser(){
       "email": email,
       "password": password1,
       "employeeRole": employeeRole,
-      "teamLeader": teamLeader,
+      "assignedTL": teamLeader,
     }),
     }
     )
 
+    .then(function(){
+    if (employeeRole == 'Member') {
+      var regisUrl = homeUrl + 'api/createMember/';
+    } else {
+      var regisUrl = homeUrl + 'api/createTeamLeader/';
+    }
+
+    fetch(regisUrl,{  
+      method:'POST',
+      headers:{
+        'Content-type':'application/json',
+        'X-CSRFToken':csrftoken,
+      },
+      body:JSON.stringify({"username": username,
+      "first_name": firstname,
+      "last_name": lastname,
+      "email": email,
+      "password": password1,
+      "employeeRole": employeeRole,
+      "assignedTL": teamLeader,
+    }),
+    }
+    )
+    }
+    )
+    .finally(function(){
+      buildEmployeeList();
+      buildTeamLeaderList();
+    })
+
     new bootstrap.Modal(document.querySelector("#registrationSuccess")).show();
     buildEmployeeList();
-
-
-
-
+    buildTeamLeaderList();
 }
   )
 }
+
+
+
+
+
+
+
 
 function passwordValidator(){
 
@@ -367,3 +400,82 @@ function passwordValidator(){
     document.querySelector("#validationPasswordFeedback").innerText = "Passwords match!";
   }
 }
+
+function buildTeamLeaderList() {
+  let wrapper = document.getElementById('team-leader-list');
+  wrapper.innerHTML = ""
+
+  let sourceURL = homeUrl + 'api/allTeamLeaders/';
+
+  fetch(sourceURL)
+  .then((resp) => resp.json())
+  .then(function(data){
+    let TeamLeaderList = data;
+    
+    sortedTeamLeaderList = [];
+
+    for (let i = 0; i< TeamLeaderList.length;i++){
+      sortedTeamLeaderList.push([String(TeamLeaderList[i].lastName) + ', ' + String(TeamLeaderList[i].firstName),TeamLeaderList[i].id]);
+    }
+
+    sortedTeamLeaderList.sort((a,b)=>a[0].localeCompare(b[0]));
+
+
+    for (let i = 0; i< sortedTeamLeaderList.length;i++){
+      let item = `
+        <option value="${sortedTeamLeaderList[i][1]}" class="team-leader-option">${sortedTeamLeaderList[i][0]}</option>
+      `
+      wrapper.innerHTML += item
+
+    }
+
+  })
+}
+
+
+function usernameValidator(){
+  let timer;
+      const username = document.querySelector('#username');
+      
+      username.addEventListener('keyup', function (e) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+
+          usernameValue= document.querySelector('#username').value;
+
+          let sourceURL = homeUrl + 'api/allUserLogins/';
+
+          fetch(sourceURL)
+          .then((resp) => resp.json())
+          .then(function(data){
+            let employeeList = data
+
+            for(let i=0;i<employeeList.length;i++){
+              if(employeeList[i].username == usernameValue){
+                document.querySelector("#username").classList.add('is-invalid');
+                document.querySelector("#username").classList.remove('is-valid');
+                document.querySelector("#validationUsernameFeedback").classList.add('invalid-feedback');
+                document.querySelector("#validationUsernameFeedback").classList.remove('valid-feedback');
+                document.querySelector("#validationUsernameFeedback").innerText = "Username already taken.";
+                break;
+              } else {
+                document.querySelector("#username").classList.add('is-valid');
+                document.querySelector("#username").classList.remove('is-invalid');
+                document.querySelector("#validationUsernameFeedback").classList.add('valid-feedback');
+                document.querySelector("#validationUsernameFeedback").classList.remove('invalid-feedback');
+                document.querySelector("#validationUsernameFeedback").innerText = "Username available!";
+              }
+            }
+        
+          })
+
+        }, 500);
+      });
+}
+
+
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+

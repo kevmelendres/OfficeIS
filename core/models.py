@@ -16,7 +16,6 @@ class TeamLeader(models.Model):
     username = models.CharField(max_length=100,blank=True)
     employeeRole = models.CharField(max_length=100,blank=True)
     
-    
     bio = models.TextField(blank=True)
     profileimg = models.ImageField(upload_to='profile_images', default='blankprofile.png')
     location = models.CharField(max_length=100,blank=True)
@@ -40,3 +39,6 @@ class Member(models.Model):
     location = models.CharField(max_length=100,blank=True)
 
     assignedTL = models.ForeignKey(TeamLeader, on_delete=models.PROTECT, null=True) 
+
+    def __str__(self):
+        return self.user.username
