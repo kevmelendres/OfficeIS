@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 
 from rest_framework.decorators import api_view
@@ -13,28 +15,52 @@ from .models import *
 # Create your views here.
 
 def index(request):
+
+    if request.user.is_authenticated:
+        if request.user.is_staff == True:
+            return redirect('/admin-panel')
+        else:
+            return redirect('/signup')
+
+
+    if request.method == 'GET' and request.GET.get('form') == 'login-form':
+        username = request.GET.get('username', None)
+        password = request.GET.get('password', None)
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+
+            if request.user.is_authenticated:
+                isLoggedInStaff = request.user.is_staff 
+      
+            data = {
+                'status': 'login-success',
+                'isLoggedInStaff': isLoggedInStaff,
+            }
+            return JsonResponse(data)
+        else:
+            data = {
+                'status': 'login-fail',
+            }
+            return JsonResponse(data)
+
     return render(request,'index.html')
+
 
 def adminLogin(request):
     return render(request,'admin-login.html')
 
+@login_required(login_url='/')
 def adminPanel(request):
-    
-    if request.method == 'POST':
-
-        if 'register-employee' in request.POST:
-            username = request.POST['username']
-            email = request.POST['email']
-            password1= request.POST['password1']
-            password2 = request.POST['password2']
-
-
 
     return render(request,'admin-panel.html')
 
 
-def login(request):
-    return render(request,'login.html')
+
+# def login(request):
+#     return render(request,'login.html')
 
 def signup(request):
 
