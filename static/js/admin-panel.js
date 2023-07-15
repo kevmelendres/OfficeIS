@@ -341,7 +341,7 @@ function registerUser(){
         'Content-type':'application/json',
         'X-CSRFToken':csrftoken,
       },
-      body:JSON.stringify({"username": username,
+      body: JSON.stringify({"username": username,
       "first_name": firstname,
       "last_name": lastname,
       "email": email,

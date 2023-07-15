@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+import json
 
 
 from rest_framework.decorators import api_view
@@ -22,11 +23,11 @@ def index(request):
         else:
             return redirect('/signup')
 
-
-    if request.method == 'GET' and request.GET.get('form') == 'login-form':
-        username = request.GET.get('username', None)
-        password = request.GET.get('password', None)
-
+    if request.method == 'POST':
+        requestData = json.loads(request.body.decode("utf-8"))
+        username = requestData['username']
+        password = requestData['password']
+  
         user = authenticate(request, username=username, password=password)
 
         if user is not None:

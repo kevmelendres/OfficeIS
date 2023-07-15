@@ -36,41 +36,46 @@ function loginUser(){
         let username = document.getElementById('username').value;
         let password = document.getElementById('password').value;
 
-        $.ajax({
-            type: "GET",
-            url: '/',
-            data: {
+        fetch('/',{  
+            method:'POST',
+            headers:{
+                'Content-type':'application/json',
+                'X-CSRFToken':csrftoken,
+
+            },
+            body: JSON.stringify({
                 "username": username,
                 'password': password,
                 'form': 'login-form',
-            },
-            dataType: "json",
-            success: function (data) {
+          }),
+          }
+          )
+          .then(response => response.json())
+          .then(function (data) {
 
-                if(data.status == 'login-success'){
+            console.log(data);
 
-                    let passwordWarning = document.getElementById('wrong-credentials')
-                    passwordWarning.style.visibility = 'hidden'  
+            if(data.status == 'login-success'){
+                
+                let passwordWarning = document.getElementById('wrong-credentials')
+                passwordWarning.style.visibility = 'hidden'  
 
-                    if (data.isLoggedInStaff === true){
-                        window.location.href = homeUrl + 'admin-panel';
-                    } else {
-                        window.location.href = homeUrl + 'signup';
-                    }
-                } else {    
-                    let passwordWarning = document.getElementById('wrong-credentials')
-                    passwordWarning.style.visibility = 'visible'  
+                if (data.isLoggedInStaff === true){
+                    window.location.href = homeUrl + 'admin-panel';
+                } else {
+                    window.location.href = homeUrl + 'signup';
                 }
-            },
-
-        })
+            } else {    
+                let passwordWarning = document.getElementById('wrong-credentials')
+                passwordWarning.style.visibility = 'visible'  
+            }
 
         
-    }
-  )
+                }
+            )
+    })
 
 }
-
 
 
 
