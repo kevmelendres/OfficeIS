@@ -42,3 +42,8 @@ class Member(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Project(models.Model):
+
+    projectName = models.CharField(max_length=100,blank=True)
+    TeamLeader = models.ForeignKey(TeamLeader, on_delete=models.PROTECT, null=True)

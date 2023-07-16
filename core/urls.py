@@ -6,6 +6,9 @@ urlpatterns = [
     path('admin-login', views.adminLogin, name='admin-login'),
     path('signup', views.signup, name='signup'),
     path('admin-panel', views.adminPanel, name='admin-panel'),
+    path('logout', views.logoutView, name='logoutView'),
+
+
 
 
 
@@ -15,8 +18,9 @@ urlpatterns = [
 
     path('api/allTeamLeaders/', views.allTeamLeaders, name = 'allTeamLeaders'),
 
-    path('api/user/<str:pk>/', views.userDetails, name = 'userDetails'),
-    
+    path('api/member/<str:pk>/', views.memberDetails, name = 'memberDetails'),
+    path('api/teamleader/<str:pk>/', views.teamLeaderDetails, name = 'teamLeaderDetails'),
+
     path('api/updateuser/<str:pk>/', views.updateUser, name = 'updateUser'),
     path('api/deleteuser/<str:pk>/', views.deleteUser, name = 'deleteUser'),
 

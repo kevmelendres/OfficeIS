@@ -52,7 +52,9 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            
+                            <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -232,19 +234,119 @@
                                             <div id="employee-list-container">
                                             </div>
                                             
+
                                             <!-- Modal UPDATE DETAILS-->
-                                            <div>
+                                            <div class="modal-container">
                                                 <div class="modal fade" id="editDetailsModal" tabindex="-1" role="dialog" aria-labelledby="editDetailsModal" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Update Existing Record</h5>
+                                                        <h5 class="modal-title" id="editDetailsTitle">Update Existing Record</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                         </div>
-                                                        <div class="modal-body">
-                                                        ...
+                                                        <div class="modal-body" id="update-details-modal">
+                                                            
+                                                            <div class="col">
+                            
+                                                                <h4>Employee Information</h4>
+                                                            
+                                                                <div class="form-outline mb-4">
+                                                                    <label class="form-label" for="form3Example1cg">First Name</label>
+                                                                    <input type="text" id="firstname-update" name="firstname" class="form-control form-control-md modal-input">
+                                                                </div>
+                                                                <div class="form-outline mb-4">
+                                                                    <label class="form-label" for="form3Example1cg">Last Name</label>
+                                                                    <input type="text" id="lastname-update" name="lastname" class="form-control form-control-md modal-input">
+                                                                </div>
+                                                                <div class="form-outline mb-4">
+                                                                    <label class="form-label" for="form3Example1cg">Email Address</label>
+                                                                    <input type="email" id="email-update" name="email" class="form-control form-control-md modal-input">
+                                                                </div>
+                                                            </div>                                                     
+                                                            <div class="col">
+                            
+                                                                <h4>Account Credentials</h4>
+                            
+                                                                <div class="form-outline mb-4">
+                                                                    <label class="form-label" for="form3Example1cg">Username</label>
+                                                                    <input type="text" id="username-update" name="username" class="form-control form-control-md modal-input">
+                                                                    <div id="validationUsernameFeedback-update">
+                                        
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="form-outline mb-4">
+                                                                    <label class="form-label" for="form3Example1cg">Password</label>
+                                                                    <input type="password" id="password1-update" name="password1" class="form-control form-control-md modal-input" onkeyup="passwordValidator()">
+                                                                </div>
+                            
+                                                                <div class="form-outline mb-4">
+                                                                    <label class="form-label" for="form3Example1cg">Retype Password</label>
+                                                                    <input type="password" id="password2-update" name="password2" class="form-control form-control-md modal-input" onkeyup="passwordValidator()">
+                                                                    <div id="validationPasswordFeedback-update">
+                                        
+                                                                    </div>
+                                                                </div>
+                                                                
+                            
+                                                            </div>                                                           
+                            
+                                                            <div class="col">
+                            
+                                                                <h4>Profile Identification</h4>
+                            
+                                                                <div class="form-outline mb-4">
+                                                                    <img src="" alt="">
+                                                                    <label class="form-label" for="form3Example1cg">Upload picture</label>
+                                                                    <input class="form-control form-control-sm" id="profileimg-update" name = "profileimg" type="file">
+                                                                </div>
+                            
+                                                            </div>
+                            
+                                                            <div class="col">
+                            
+                                                                <h4>Team Management</h4>
+                        
+                                                                <label>Employee Role</label>
+                        
+                                                                <select class="form-select" id="employee-role-select-update" aria-label="" name = 'employee-role'>
+                                                                    <option selected value="Team Leader" class="employee-role">Team Leader</option>
+                                                                    <option value="Member" class="employee-role">Member</option>
+                                                                </select>
+                                                                
+                            
+                                                                <div class="container-fluid" id="assign-to-team-container">
+                            
+                                                                    <label>Assign to Team Leader:</label>
+                            
+                                                                    <select class="form-select" id="team-leader-list-update" multiple aria-label="multiple select example">
+                                                                        
+                                                                    </select>
+                            
+                                                                </div>
+                            
+                                                            </div>
+                                
+                                                            
+
+
+                                                        
+
+
+
+
+
+
+
+
+                                                            
+
+
+
+
+
                                                         </div>
                                                         <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -260,7 +362,7 @@
                                                 <div class="modal-dialog modal-dialog-centered " role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                                                    <h5 class="modal-title" id="deleteEntryTitle">Warning!</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>

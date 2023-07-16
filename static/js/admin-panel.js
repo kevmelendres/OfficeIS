@@ -11,6 +11,37 @@ registerUser();
 buildTeamLeaderList();
 usernameValidator();
 
+function updateEntry(entry)
+    {
+
+      let buttonId = entry.id;
+      let splitText = buttonId.split('-');
+      let entryID = splitText[2];
+
+      let firstName = document.getElementById('firstname-update');
+      let lastName = document.getElementById('lastname-update');
+      let email = document.getElementById('email-update');
+
+      let username = document.getElementById('username-update');
+      let employeeRole = document.getElementById('employee-role-select-update');
+      
+      let userURL = 'api/member/'+ entryID +'/'
+
+      fetch(userURL)
+      .then((resp) => resp.json())
+      .then(function(data){
+
+        firstName.value = data.firstName;
+        lastName.value = data.lastName;
+        email.value = data.email;
+        username.value = data.username;
+        employeeRole.value = data.employeeRole;
+
+      })
+
+
+    }
+
 
 
 
@@ -218,30 +249,40 @@ function buildEmployeeList(){
   .then(function(data){
     let employeeList = data
 
+
+    let sortedEmployeeList = []
+
     for (let i = 0; i< employeeList.length;i++){
       if (employeeList[i].username != 'admin'){
-        let item = `
+        sortedEmployeeList.push([employeeList[i].last_name, employeeList[i].first_name,employeeList[i].id]);
+      }
+    }
+    sortedEmployeeList.sort(function(a,b){return a[0].localeCompare(b[0]);});
+
+
+    for (let i = 0; i< sortedEmployeeList.length;i++){
+      let item = `
           <a href="#" class="list-group-item list-group-item-action list-group-item-light each-employee-tab">
             <div class="row">
                 <div class="col-md-8">
-                ${employeeList[i].username}
+                ${capitalizeFirstLetter(sortedEmployeeList[i][0])}, ${capitalizeFirstLetter(sortedEmployeeList[i][1])}
                 </div>
                 <div class="col-md-2 text-center employee-buttons">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDetailsModal" id='update-button-${employeeList[i].id}'>Update</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDetailsModal" onclick="updateEntry(this)" id='update-button-${sortedEmployeeList[i][2]}'>Update</button>
                 </div>
-                <div class="col-md-2 text-center employee-buttons" data-bs-toggle="modal" data-bs-target="#confirmDelete" id='delete-button-${employeeList[i].id}'>
+                <div class="col-md-2 text-center employee-buttons" data-bs-toggle="modal" data-bs-target="#confirmDelete" onclick="deleteEntry(this)" id='delete-button-${sortedEmployeeList[i][2]}'>
                     <button type="button" class="btn btn-danger">Delete</button>
                 </div>
             </div>
           </a>
 
         `
-
-
         wrapper.innerHTML += item
-    }
+
 
     }
+
+
 
   })
 

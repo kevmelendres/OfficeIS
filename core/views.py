@@ -6,7 +6,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 import json
-
+from django.contrib.auth import logout
+# from django.core.urlresolvers import reverse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -87,6 +88,21 @@ def signup(request):
         return render(request,'signup.html')
     
 
+def logoutView(request):
+
+    if request.user.is_authenticated:
+        logout(request)
+
+    return redirect('/')
+
+
+
+
+
+
+
+
+
 
 
 
@@ -120,10 +136,28 @@ def userList(request):
 
 
 @api_view(['GET'])
-def userDetails(request,pk):
-    user = Member.objects.get(id=pk)
-    serializer = UserSerializer(user,many=False)
+def memberDetails(request,pk):
+    
+    try:
+        person = Member.objects.get(user=pk)
+        serializer = MemberSerializer(person,many=False)
+
+    except Member.DoesNotExist:
+        return redirect('/api/teamleader/' + pk + '/')
+
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def teamLeaderDetails(request,pk):
+    
+    person = TeamLeader.objects.get(user=pk)
+    serializer = TeamLeaderSerializer(person,many=False)
+
+    return Response(serializer.data)
+
+
+
 
 #has error
 @api_view(['POST'])
